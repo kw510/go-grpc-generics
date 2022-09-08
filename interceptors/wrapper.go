@@ -1,4 +1,4 @@
-package server
+package interceptors
 
 import (
 	"context"
@@ -6,11 +6,11 @@ import (
 	"google.golang.org/grpc"
 )
 
-type Wrapper struct {
+type serverWrapper struct {
 	grpc.ServerStream
 	Ctx context.Context
 }
 
-func (w Wrapper) Context() context.Context {
+func (w serverWrapper) Context() context.Context {
 	return w.Ctx
 }
