@@ -1,9 +1,11 @@
-package server
+package interceptor
 
 import (
 	"context"
 
 	"google.golang.org/grpc"
+
+	"github.com/kw510/grpc-interceptor/server"
 )
 
 type Interceptor interface {
@@ -25,7 +27,7 @@ func UnaryInterceptor(interceptor Interceptor) grpc.UnaryServerInterceptor {
 func StreamInterceptor(interceptor Interceptor) grpc.StreamServerInterceptor {
 	return func(srv any, ss grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) error {
 		ctx := interceptor.BeforeHandler(ss.Context())
-		err := handler(srv, &wrapper{Ctx: ctx, ServerStream: ss})
+		err := handler(srv, &server.Wrapper{Ctx: ctx, ServerStream: ss})
 		interceptor.AfterHandler(ctx, err)
 		return err
 	}
