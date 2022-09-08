@@ -6,6 +6,10 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
+// Context keys
+type beforeInterceptor struct{}
+type beforeHandlerFunc struct{}
+
 // Implement a generic interceptor
 type interceptor struct {
 	beforeHandler func(ctx context.Context) context.Context
@@ -21,7 +25,9 @@ func (i interceptor) AfterHandler(ctx context.Context, err error) {
 }
 
 // Implement grpc.ServerStream
-type serverStream struct{ ctx context.Context }
+type serverStream struct {
+	ctx context.Context
+}
 
 func (s serverStream) Context() context.Context {
 	return s.ctx
