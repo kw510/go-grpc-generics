@@ -9,11 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: golang:alpine
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-      - name: Setup Go environment
-        uses: actions/setup-go@v3.3.0
       - name: Run Tests
         run: go test -coverprofile=coverage.txt -covermode=atomic ./...
       - name: Upload coverage to Codecov
