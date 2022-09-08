@@ -9,9 +9,6 @@ import (
 	"google.golang.org/grpc"
 )
 
-type beforeInterceptor struct{}
-type beforeHandlerFunc struct{}
-
 func TestUnaryServerInterceptor(t *testing.T) {
 	ctx := context.WithValue(context.Background(), beforeInterceptor{}, "beforeInterceptor")
 	grpcInterceptor := UnaryServerInterceptor(interceptor{

@@ -6,6 +6,10 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
+// Context keys
+type beforeInterceptor struct{}
+type beforeHandlerFunc struct{}
+
 // Implement a generic interceptor
 type interceptor struct {
 	beforeHandler func(ctx context.Context) context.Context
