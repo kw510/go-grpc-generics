@@ -25,7 +25,9 @@ func (i interceptor) AfterHandler(ctx context.Context, err error) {
 }
 
 // Implement grpc.ServerStream
-type serverStream struct{ ctx context.Context }
+type serverStream struct {
+	ctx context.Context
+}
 
 func (s serverStream) Context() context.Context {
 	return s.ctx

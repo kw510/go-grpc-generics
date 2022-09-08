@@ -22,9 +22,8 @@ func TestUnaryClientInterceptor(t *testing.T) {
 		},
 	})
 
-	_ = grpcInterceptor(ctx, t.Name(), nil, nil, nil, func(ctx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, opts ...grpc.CallOption) error {
+	grpcInterceptor(ctx, t.Name(), nil, nil, nil, func(ctx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, opts ...grpc.CallOption) error {
 		return errors.New("invoker error")
-
 	})
 }
 
@@ -41,7 +40,7 @@ func TestStreamClientInterceptor(t *testing.T) {
 		},
 	})
 
-	_, _ = grpcInterceptor(ctx, nil, nil, t.Name(), func(ctx context.Context, desc *grpc.StreamDesc, cc *grpc.ClientConn, method string, opts ...grpc.CallOption) (grpc.ClientStream, error) {
+	grpcInterceptor(ctx, nil, nil, t.Name(), func(ctx context.Context, desc *grpc.StreamDesc, cc *grpc.ClientConn, method string, opts ...grpc.CallOption) (grpc.ClientStream, error) {
 		return nil, errors.New("invoker error")
 	})
 }
