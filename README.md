@@ -11,9 +11,12 @@ Just define the interceptor once, then covert into the type gRPC interceptor tha
 Insipred by https://github.com/grpc-ecosystem/go-grpc-middleware.
 
 ## Usage
+To use this generic interceptor, first define it, then convert it into a grpc interceptor.
 
 ### Define an generic Interceptor
+
 We define what the interceptor perfoms before and after the call. This implements the generic interceptor interface.
+
 ```go
 type YourInterceptor struct {}
 
@@ -29,10 +32,11 @@ func (i YourInterceptor) AfterHandler(ctx context.Context, err error) {
 }
 ```
 
-### Using an Inerceptor
-Pass in the struct to the converter functions, which will return the repective interceptor.
-```go
+### Using an Interceptor
 
+Pass in the struct to the converter functions, which will return the respective interceptor.
+
+```go
 import "github.com/kw510/grpc-interceptor/interceptors"
 
 grpcServer := grpc.NewServer(
