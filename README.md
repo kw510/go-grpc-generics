@@ -4,6 +4,40 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/kw510/grpc-interceptor.svg)](https://pkg.go.dev/github.com/kw510/grpc-interceptor)
 
 
-A generic and uniform interceptor supporting unary or stream gRPC interceptors.
+A generic and uniform interceptor, combining unary and stream gRPC interceptors into a single interceptor.
+
+Just define the interceptor once, then covert into the type gRPC interceptor that you need! 🪄
 
 Insipred by https://github.com/grpc-ecosystem/go-grpc-middleware.
+
+## Usage
+
+### Defining an Interceptor
+```go
+import "github.com/kw510/grpc-interceptor/interceptors"
+
+type YourInterceptor struct {}
+
+func (i YourInterceptor) BeforeHandler(ctx context.Context) context.Context {
+  // Performed before the handler is called
+  ...
+  return ctx // Context is passed into the handler
+}
+
+func (i YourInterceptor) AfterHandler(ctx context.Context, err error) {
+  // Performed after the handler is called
+  ...
+}
+```
+
+### Using an Inerceptor
+```go
+grpcServer := grpc.NewServer(
+  grpc.StreamInterceptor(
+    interceptors.StreamServerInterceptor(YourInterceptor{})
+  )
+  grpc.UnaryInterceptor(
+    interceptors.UnaryServerInterceptor(YourInterceptor{})
+  )
+)
+```
