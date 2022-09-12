@@ -20,7 +20,7 @@ func UnaryServerInterceptor(interceptor Interceptor) grpc.UnaryServerInterceptor
 func StreamServerInterceptor(interceptor Interceptor) grpc.StreamServerInterceptor {
 	return func(srv interface{}, ss grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) error {
 		ctx := interceptor.BeforeHandler(ss.Context())
-		err := handler(srv, &ServerWrapper{Ctx: ctx, ServerStream: ss})
+		err := handler(srv, &serverWrapper{Ctx: ctx, ServerStream: ss})
 		interceptor.AfterHandler(ctx, err)
 		return err
 	}
