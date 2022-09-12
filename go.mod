@@ -1,4 +1,4 @@
-module github.com/kw510/grpc-interceptor
+module github.com/kw510/go-grpc-generics
 
 go 1.19
 
